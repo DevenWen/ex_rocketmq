@@ -41,11 +41,14 @@ defmodule BrokerTest do
            consumer_group: group,
            namesrvs: namesrvs,
            processor: %ExRocketmq.Consumer.MockProcessor{},
-           subscriptions: %{"POETRY" => Models.MsgSelector.new(:tag, "*")}
+           subscriptions: %{
+             topic => Models.MsgSelector.new(:tag, "*"),
+             "POETRY" => Models.MsgSelector.new(:tag, "*")
+           }
          ]}
       )
 
-    [broker: pid, topic: topic, group: group, broker_name: broker_name]
+    [broker: pid, topic: topic, group: group, broker_name: broker_name, consumer: consumer]
   end
 
   test "send_hearbeat", %{broker: broker, group: group, topic: topic} do
@@ -151,7 +154,7 @@ defmodule BrokerTest do
                queue_id: 0,
                queue_offset: 0,
                max_msg_nums: 32,
-               sys_flag: 2,
+               sys_flag: 0,
                commit_offset: 0,
                suspend_timeout_millis: 20_000,
                sub_expression: "*",
