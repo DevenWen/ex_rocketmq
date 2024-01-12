@@ -5,6 +5,7 @@ defmodule ConsumerTest do
   use ExUnit.Case
 
   alias ExRocketmq.Consumer
+  alias ExRocketmq.Models
   alias ExRocketmq.Models.Message
   alias ExRocketmq.Namesrvs
   alias ExRocketmq.Transport
@@ -23,6 +24,7 @@ defmodule ConsumerTest do
 
     namesrvs = start_supervised!({Namesrvs, namesrvs_opts})
 
+    # consumer_group must be same with other Test Module, we will use other consumer group if need
     opts = [
       consumer_group: group,
       namesrvs: namesrvs,
